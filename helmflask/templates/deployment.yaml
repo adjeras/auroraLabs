@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "helmflask.fullname" . }}
+  labels:
+    {{- include "helmflask.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "helmflask.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "helmflask.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: {{ .Values.envvar.envvarName }}
+              value: {{ .Values.envvar.envvarValue }}
+          volumeMounts:
+            - mountPath: "{{ .Values.volume.mountPath }}"
+              name: {{ .Values.volume.volName }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.targetPort }}
+              protocol: TCP
+      volumes:
+        - name: {{ .Values.volume.volName }}
+          hostPath:
+            path: {{ .Values.volume.hostPath }}
