@@ -1,6 +1,10 @@
 pipeline {
     
     agent any
+
+    environment {
+        DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+    }
    
     stages {
         
@@ -12,24 +16,23 @@ pipeline {
                         sh "docker images"
                         sh "pwd"
                         sh "docker build -t adjeras/auroralabs:latest ."
-                        sh "docker push adjeras/auroralabs:latest"
-                        sh "docker stop auroraApp || docker run -p 5000:5000 -id --name auroraApp -v auroralabs_aurora_data:/data adjeras/auroralabs:latest"
                     }
                 }
             }
         }
         
-        stage ('Push Helm chart to my-helm-charts repo') {
+        stage ('Docker login') {
             steps {
-                script {
-                    dir('/var/lib/jenkins/workspace/'){
-                        sh "pwd"
-                    }
-                    sleep 5
-                }
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
 
+        stage ('Docker push') {
+            steps {
+                sh "docker push adjeras/auroralabs:latest"
+                sh "docker stop auroraApp || docker run -p 5000:5000 -id --name auroraApp -v auroralabs_aurora_data:/data adjeras/auroralabs:latest"
+            }
+        }
 /*
         stage ('Installthe latest Helm chart on the AKS cluster') {
             steps {
