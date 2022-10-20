@@ -31,7 +31,7 @@ pipeline {
             steps {
                 sh "docker push adjeras/auroralabs:latest"
                 sh "docker stop auroraApp || echo 'Skipping as the auroralabs container is already stopped'"
-                sh "docker rm auroraApp"
+                sh "docker rm auroraApp || echo 'Skipping as there is no auroralabs container to delete'"
                 sleep 5
                 sh "docker run -p 5000:5000 -id --name auroraApp -v auroralabs_aurora_data:/data adjeras/auroralabs:latest"
             }
