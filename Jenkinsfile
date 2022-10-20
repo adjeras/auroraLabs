@@ -12,7 +12,8 @@ pipeline {
                         sh "docker images"
                         sh "pwd"
                         sh "docker build -t adjeras/auroralabs:latest ."
-                        sh "docker stop auroraApp || docker run -p 5000:5000 -id --name auroraApp -v auroralabs_aurora_data:/data adjeras/auroralabs:latest "
+                        sh "docker push adjeras/auroralabs:latest"
+                        sh "docker stop auroraApp || docker run -p 5000:5000 -id --name auroraApp -v auroralabs_aurora_data:/data adjeras/auroralabs:latest"
                     }
                 }
             }
@@ -24,7 +25,7 @@ pipeline {
                     dir('/var/lib/jenkins/workspace/'){
                         sh "pwd"
                     }
-                    sleep 50
+                    sleep 5
                 }
             }
         }
