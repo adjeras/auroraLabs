@@ -5,7 +5,7 @@ LABEL maintainer="adjerassi"
 COPY src /src
 COPY data /data
 
-ENV RESPONCE="Devops is great amir333333333333333"
+ENV RESPONCE="Devops is great!!!"
 
 WORKDIR /src
 
