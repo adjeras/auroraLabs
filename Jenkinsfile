@@ -36,18 +36,5 @@ pipeline {
                 sh "docker run -p 5000:5000 -id --name auroraApp -v auroralabs_aurora_data:/data adjeras/auroralabs:latest"
             }
         }
-/*
-        stage ('Installthe latest Helm chart on the AKS cluster') {
-            steps {
-                script {
-                    sh "helm repo update"
-                    sleep 5
-                    sh "helm search repo my-helm-charts -l --devel"
-                    sh "helm repo update"
-                    sleep 5
-                }
-            }
-        }
-*/
     }
 }
