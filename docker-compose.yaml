@@ -1,24 +1,13 @@
 version: "3.7"
 
-
 services:
-  devopsisgreat:
-    image: devopsisgreat/aurora
-    build:
-      context: ./
-    ports:
-      - 5000:5000
-    volumes:
-      - aurora_data:/data
-
   jenkins:
-    image: jenkins/jenkins:lts
+    image: adjeras/custom-jenkins:latest
     ports:
       - 8080:8080
     volumes:
       - jenkins_home:/var/jenkins_home
 
 volumes:
-  aurora_data:
   jenkins_home:
 
