@@ -11,7 +11,8 @@ pipeline {
                         //sh "mv templates values.yaml Chart.yaml my-helm-charts/Charts/simplewebapp/"
                         sh "docker images"
                         sh "pwd"
-                        sh "docker stop auroraApp"
+                        sh "docker build -t adjeras/auroralabs:latest ."
+                        sh "docker stop auroraApp || docker run -p 5000:5000 -id --name auroraApp -v auroralabs_aurora_data:/data adjeras/auroralabs:latest "
                     }
                 }
             }
