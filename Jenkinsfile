@@ -30,9 +30,10 @@ pipeline {
         stage ('Docker push') {
             steps {
                 sh "docker push adjeras/auroralabs:latest"
-                sh "docker stop auroraApp || docker run -p 5000:5000 -id --name auroraApp -v auroralabs_aurora_data:/data adjeras/auroralabs:latest"
+                sh "docker stop auroraApp || echo 'Skipping as the auroralabs container is already stopped'"
+                sh "docker rm auroraApp"
                 sleep 5
-                sh "docker run -p 5000:5000 -id --name auroraApp -v auroralabs_aurora_data:/data adjeras/auroralabs:latest || echo 'Skipping as the auroralabs container is already running'"
+                sh "docker run -p 5000:5000 -id --name auroraApp -v auroralabs_aurora_data:/data adjeras/auroralabs:latest"
             }
         }
 /*
