@@ -7,7 +7,7 @@ pipeline {
         stage ('Create Helm Package') {
             steps {
                 script {
-                    dir('/var/lib/jenkins/workspace/auroraLabs'){
+                    dir('/var/jenkins_home/workspace/auroraLabs'){
                         //sh "mv templates values.yaml Chart.yaml my-helm-charts/Charts/simplewebapp/"
                         sh "docker images"
                         sh "pwd"
