@@ -3,7 +3,7 @@ Aurora Labs
 Run the following commend from the root location of the auroraLabs repo:
 docker-compose -f docker-compose.yaml up -d
 
-The python app will not be running until you make your firs commit.
+The python app will not be running until you make your first commit.
 Modify the Dockerfile ENV RESPONCE to whatever you want
 ENV RESPONCE="Devops is great!"
 
